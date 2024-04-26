@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  title String @unique
+  notes Note[]
+}
+
+model Note {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  tags        Tag[]
+  isArchived    Boolean  @default(false)
+}
+
